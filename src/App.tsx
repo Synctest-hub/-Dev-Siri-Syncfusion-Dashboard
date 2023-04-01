@@ -66,7 +66,7 @@ const App: FC = () => {
       >
         <Navbar />
         <main>
-          {themeSettings && <ThemeSettings />}
+          <Suspense fallback={<div aria-busy />}>{themeSettings && <ThemeSettings />}</Suspense>
 
           <Suspense fallback={<div aria-busy />}>
             <Routes>
