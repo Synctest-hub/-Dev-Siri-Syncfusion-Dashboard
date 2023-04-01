@@ -1,5 +1,5 @@
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
-import { lazy, useEffect } from "react";
+import { Suspense, lazy, useEffect } from "react";
 
 import useStateContext from "../context/Context";
 import avatar from "../data/avatar.jpg";
@@ -49,20 +49,21 @@ const Navbar = () => {
             color={currentColor}
             icon={<RiNotification3Line />}
           />
-          <TooltipComponent content="Profile" position="BottomCenter">
-            <div className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg" onClick={() => handleClick("userProfile")}>
-              <img className="rounded-full w-8 h-8" src={avatar} alt="user-profile" />
-              <p>
-                <span className="text-gray-400 text-14">Hi,</span> <span className="text-gray-400 font-bold ml-1 text-14">Michael</span>
-              </p>
-              <MdKeyboardArrowDown className="text-gray-400 text-14" />
-            </div>
-          </TooltipComponent>
-
-          {isClicked.cart && <Cart />}
-          {isClicked.chat && <Chat />}
-          {isClicked.notification && <Notification />}
-          {isClicked.userProfile && <UserProfile />}
+          <Suspense fallback={<p>Loading</p>}>
+            <TooltipComponent content="Profile" position="BottomCenter">
+              <div className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg" onClick={() => handleClick("userProfile")}>
+                <img className="rounded-full w-8 h-8" src={avatar} alt="user-profile" />
+                <p>
+                  <span className="text-gray-400 text-14">Hi,</span> <span className="text-gray-400 font-bold ml-1 text-14">Michael</span>
+                </p>
+                <MdKeyboardArrowDown className="text-gray-400 text-14" />
+              </div>
+            </TooltipComponent>
+            {isClicked.cart && <Cart />}
+            {isClicked.chat && <Chat />}
+            {isClicked.notification && <Notification />}
+            {isClicked.userProfile && <UserProfile />}
+          </Suspense>
         </div>
       </nav>
     </article>
